@@ -3,19 +3,29 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        final byte MONTHS_IN_YEAR = 12;
+        final byte PERCENT = 100;
+
        Scanner scanner= new Scanner(System.in);
+
         System.out.print("Principal: ");
-        float amount = scanner.nextFloat();
+        int amount = scanner.nextInt();
+
         System.out.print("Annual Interest Rate: ");
-        float interestRate = scanner.nextFloat();
-        double r = ( ( (double) interestRate / (double) 100) / (double)  12) ;
+        float annualInterest = scanner.nextFloat();
+        float monthlyInterest =  annualInterest / MONTHS_IN_YEAR / PERCENT ;
+
         System.out.print("Period(years): ");
-        byte year = scanner.nextByte();
-        double expo = Math.pow((1 + r), year);
-        System.out.println("Mortgage: ");
-        double mortgage = amount *( (r * expo) / (expo - 1) );
+        byte years = scanner.nextByte();
+        int numbersOfPayments = years * MONTHS_IN_YEAR;
+
+        System.out.print("Mortgage: ");
+        double mortgage = amount
+                * (monthlyInterest * Math.pow(1 + monthlyInterest, numbersOfPayments))
+                / (Math.pow(1 + monthlyInterest, numbersOfPayments) -1)
+                ;
         String result = NumberFormat.getCurrencyInstance().format(mortgage);
-        System.out.println(result);
+        System.out.print(result);
 
 
     }

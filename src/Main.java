@@ -4,21 +4,23 @@ public class Main {
     final static byte MONTHS_IN_YEAR = 12;
     final static byte PERCENT = 100;
     public static void main(String[] args) {
-
-
-
         int amount = (int) readNumber("Principal (1K - 1M): ",1_000,1_000_000);
         float annualInterest = (float) readNumber("Annual Interest Rate: ",1, 30);
         byte years = (byte) readNumber("Period(years): ",1 ,30);
 
-        double mortgage = calculateMortgage(amount, annualInterest , years);
+        printMortgage(amount, annualInterest, years);
+        printPaymentSchedule(amount, annualInterest, years);
+    }
 
+    private static void printMortgage(int amount, float annualInterest, byte years) {
+        double mortgage = calculateMortgage(amount, annualInterest, years);
         String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgage);
         System.out.println();
         System.out.println("MORTGAGE");
         System.out.println("--------------");
         System.out.print("Monthly Payments: " + mortgageFormatted);
-
+    }
+    private static void printPaymentSchedule(int amount, float annualInterest, byte years) {
         System.out.println();
         System.out.println("PAYMENT SCHEDULE");
         System.out.println("----------------");
@@ -27,7 +29,6 @@ public class Main {
             System.out.println(NumberFormat.getCurrencyInstance().format(balance));
         }
     }
-
     public static double readNumber(String prompt, double min, double max){
         Scanner scanner = new Scanner(System.in);
         double value;
@@ -42,7 +43,6 @@ public class Main {
 
         return value;
     }
-
     public static double calculateBalance(
             int amount,
             float annualInterest,
@@ -56,7 +56,6 @@ public class Main {
                 * (Math.pow(1 + monthlyInterest, numbersOfPayments) - Math.pow(1 + monthlyInterest, numberOfPaymentsMade))
                 / (Math.pow(1 + monthlyInterest, numbersOfPayments) - 1);
     }
-
     public static double calculateMortgage(
             int amount,
             float annualInterest,
